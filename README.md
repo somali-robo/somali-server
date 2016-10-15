@@ -1,1 +1,3 @@
 # somali-server
+heroku
+meteor
