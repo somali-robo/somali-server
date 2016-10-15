@@ -1,11 +1,10 @@
 {
   "name": "somali-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "meteor run"
   },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "meteor-node-stubs": "~0.2.0"
+  }
 }
