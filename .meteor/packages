@@ -24,3 +24,5 @@ accounts-ui
 blaze-html-templates
 http
 nimble:restivus
+meteorhacks:async
+mizzao:bootboxjs

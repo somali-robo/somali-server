@@ -1,0 +1,28 @@
+<!-- オーナー -->
+<template name="ownerTemplate">
+  <h1>オーナー</h1>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Device Name</th>
+        <th>CreateDate</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each owners}}
+        {{> ownerRow}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="ownerRow">
+  <tr>
+    <td>{{name}}</td>
+    <td>{{device.name}}</td>
+    <td>{{createdAt}}</td>
+    <td><input type='button' class='btnDelete btn btn-danger' value='DELETE' data-id='{{_id}}' data-name='{{name}}'/></td>
+  </tr>
+</template>

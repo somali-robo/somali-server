@@ -1,0 +1,26 @@
+<!-- チャット -->
+<template name="chatTemplate">
+  <h1>チャット</h1>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>CreateDate</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rooms}}
+        {{> chatRow}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="chatRow">
+  <tr>
+    <td>{{name}}</td>
+    <td>{{createdAt}}</td>
+    <td><input type='button' class='btnDelete btn btn-danger' value='DELETE' data-id='{{_id}}' data-serial-code='{{serialCode}}'/></td>
+  </tr>
+</template>

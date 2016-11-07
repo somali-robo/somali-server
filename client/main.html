@@ -1,27 +1,41 @@
 <head>
   <title>somali-server</title>
 </head>
-
 <body>
-  <h1>Welcome to Meteor!</h1>
-  <div>{{> loginButtons}}</div>
-
-  <h1>Messages</h1>
-  {{> Messages}}
+  <div id="container">
+    <h1>Somali</h1>
+    {{> loginTemplate}}
+  </div>
 </body>
 
-<template name="Messages">
-  <ul class="list-group">
-    {{#each message in messages}}
-      {{> Message message=message}}
-    {{/each}}
-  </ul>
+<template name="loginTemplate">
+  {{#if isLogin}}{{> loginButtons}}{{else}}{{> topTemplate}}{{/if}}
 </template>
 
-<template name="Message">
-  <li class="list-group-item">
-       <span class="message-subject">{{message.subject}}</span>
-       <span class="message-body">{{message.body}}</span>
-       <span class="message-createdAt">{{message.createdAt}}</span>
-  </li>
+<template name="topTemplate">
+  <div class="row">
+    {{> menuTemplate}}
+    {{> mainTemplate}}
+  </div>
+</template>
+
+<template name="menuTemplate">
+    <div class="col-md-2">
+      <h2>Menu</h2>
+      <ul>
+        <li class='clickMenu' data-menu="serviceInfo">サービス情報</li>
+        <li class='clickMenu' data-menu="device">デバイス</li>
+        <li class='clickMenu' data-menu="owner">オーナー</li>
+        <li class='clickMenu' data-menu="chat">チャット</li>
+      </ul>
+    </div>
+</template>
+
+<template name="mainTemplate">
+  <div id="mainContainer" class="col-md-8">
+    {{#if isMenu "serviceInfo"}}{{> serviceInfoTemplate}}{{/if}}
+    {{#if isMenu "device"}}{{> deviceTemplate}}{{/if}}
+    {{#if isMenu "owner"}}{{> ownerTemplate}}{{/if}}
+    {{#if isMenu "chat"}}{{> chatTemplate}}{{/if}}
+  </div>
 </template>

@@ -1,0 +1,26 @@
+<!-- サービス情報 -->
+<template name="serviceInfoTemplate">
+  <h1>サービス情報</h1>
+  <table class="table table-striped table-bordered">
+    <tbody>
+      {{#each serviceInfos}}
+        {{> serviceInfoRow}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="serviceInfoRow">
+  <tr>
+    <th>name</th>
+    <td>{{name}}</td>
+  </tr>
+  <tr>
+    <th>Socket.io Port</th>
+    <td>{{socketPort}}</td>
+  </tr>
+  <tr>
+    <th>CreateDate</th>
+    <td>{{createdAt}}</td>
+  </tr>
+</template>

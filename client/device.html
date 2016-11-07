@@ -1,0 +1,28 @@
+<!-- デバイス -->
+<template name="deviceTemplate">
+  <h1>デバイス</h1>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>SerialCode</th>
+        <th>Name</th>
+        <th>CreateDate</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each devices}}
+        {{> deviceRow}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="deviceRow">
+  <tr>
+    <td>{{serialCode}}</td>
+    <td>{{name}}</td>
+    <td>{{createdAt}}</td>
+    <td><input type='button' class='btnDelete btn btn-danger' value='DELETE' data-id='{{_id}}' data-serial-code='{{serialCode}}'/></td>
+  </tr>
+</template>

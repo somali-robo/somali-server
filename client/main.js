@@ -1,43 +1,63 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { HTTP } from 'meteor/http';
-
-import Messages from '../imports/api/db/messages';
+import { Session } from 'meteor/session';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 
 import './main.html';
 
-Template.Messages.onCreated(function() {
-  this.messages = new ReactiveVar();
+//Hack https://github.com/socketio/socket.io-client/issues/961
+import Response from 'meteor-node-stubs/node_modules/http-browserify/lib/response';
+if (!Response.prototype.setEncoding) {
+  Response.prototype.setEncoding = function(encoding) {
+    // do nothing
+  }
+}
 
+Template.loginTemplate.onCreated(function() {
+  //ログイン処理
+  login();
+
+  //初期画面を サービス情報に設定
+  Session.set("isMenu","serviceInfo");
+});
+
+Template.loginTemplate.helpers({
+  isLogin:function(){
+      return Session.get("isLogin");
+    }
+});
+
+//ログイン状態を確認
+function login(){
   Deps.autorun(function(){
     if(Meteor.userId()) {
       console.log('ログインしてる');
       var userobj = Meteor.user();
       console.log(Meteor.userId());  // UserID
       console.log(userobj); // メールアドレス
+      Session.set("isLogin",true);
     }else{
       console.log('ログインしてない');
+      Session.set("isLogin",false);
     }
   });
+};
 
-  // ブックマーク一覧取得
-  const fetchBookmarks = () => {
-    HTTP.get('/api/messages', (err, res) => {
-      if (err) { console.error(err); return; }
-      this.messages.set(res.data.data);
-      console.log("GET /api/messages");
-      console.log(res.data.data);
-    });
-  }
-  fetchBookmarks();
-  //定期的に実行する
-  Meteor.setInterval(fetchBookmarks, 5000);
-
+Template.mainTemplate.helpers({
+  isMenu:function(value){
+      return value === Session.get("isMenu");
+    }
 });
 
-Template.Messages.helpers({
-  messages: () => Template.instance().messages.get(),
+Template.menuTemplate.events({
+    // ボタンのクリックイベント
+    'click .clickMenu': function(event, template) {
+        console.log('clickMenu');
+        const currentTarget = $(event.currentTarget);
+        const menu = currentTarget.data('menu');
+        Session.set("isMenu",menu);
+    }
 });
