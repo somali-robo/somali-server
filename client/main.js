@@ -26,12 +26,13 @@ Template.loginTemplate.onCreated(function() {
 
 Template.loginTemplate.helpers({
   isLogin:function(){
-      return Session.get("isLogin");
+      return true != Session.get("isLogin")
     }
 });
 
 //ログイン状態を確認
 function login(){
+  Session.set("isLogin",false);
   Deps.autorun(function(){
     if(Meteor.userId()) {
       console.log('ログインしてる');

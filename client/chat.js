@@ -36,5 +36,12 @@ Template.chatTemplate.events({
               ChatRooms.remove({'_id':id});
             }
         });
+    },
+    'click .btnDetail': function(event, template) {
+        console.log('btnDetail');
+        const msg = "詳細を表示する";
+        const confirm = bootbox.confirm(msg, function(result) {
+
+        });
     }
 });
