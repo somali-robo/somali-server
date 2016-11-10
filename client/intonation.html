@@ -1,0 +1,39 @@
+<!-- 抑揚認識発話 -->
+<template name="intonationTemplate">
+  <h1>抑揚認識発話</h1>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>平常</th>
+        <th>怒り</th>
+        <th>喜び</th>
+        <th>悲しみ</th>
+        <th>元気度</th>
+        <th>CreateDate</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each intonations}}
+        {{> intonationRow}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="intonationRow">
+  <tr>
+    <td>{{_id}}</td>
+    <td>{{calm}}</td>
+    <td>{{anger}}</td>
+    <td>{{joy}}</td>
+    <td>{{sorrow}}</td>
+    <td>{{energy}}</td>
+    <td>{{createdAt}}</td>
+    <td>
+      <input type='button' class='btnDelete btn btn-danger' value='DELETE' data-id='{{_id}}' />
+      <input type='button' class='btnEdit btn btn-info' value='EDIT' data-id='{{_id}}' data-calm='{{calm}}' data-anger='{{anger}}' data-joy='{{joy}}' data-sorrow='{{sorrow}}' data-energy='{{energy}}'/>
+    </td>
+  </tr>
+</template>

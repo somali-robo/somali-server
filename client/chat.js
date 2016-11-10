@@ -12,10 +12,6 @@ Template.chatTemplate.onCreated(function() {
   console.log("chatTemplate onCreated");
 });
 
-Template.chatTemplate.onCreated(function() {
-  console.log("ownerTemplate onCreated");
-});
-
 Template.chatTemplate.helpers({
   rooms:() => ChatRooms.find()
 });
