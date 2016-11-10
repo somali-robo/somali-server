@@ -9,6 +9,8 @@ import { Message } from '../imports/api/db/message';
 import {Empath} from '../imports/extra/empath';
 
 Meteor.startup(() => {
+  Meteor.call('resetear');
+
   // 初期データ投入
   fncDataInit();
 
