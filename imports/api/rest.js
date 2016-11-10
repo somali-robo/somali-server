@@ -48,8 +48,8 @@ Api.addRoute('devices', {
   // POST /api/devices
   post: {
     action: function() {
-      const { id, name } = this.bodyParams;
-      const obj = Device.create(id,name);
+      const { serialCode, name } = this.bodyParams;
+      const obj = Device.create(serialCode,name);
       const res = Devices.insert(obj);
       return {
         status: 'success',
