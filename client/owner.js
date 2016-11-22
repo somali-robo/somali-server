@@ -20,6 +20,8 @@ Template.ownerTemplate.events({
         const currentTarget = $(event.currentTarget);
         const name = currentTarget.data('name');
         const id = currentTarget.data('id');
+        console.log("ownerId:"+id);
+
         //確認ダイアログを表示
         const msg = name+"を削除しますが、よろしいですか？";
         const confirm = bootbox.confirm(msg, function(result) {

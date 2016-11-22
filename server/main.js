@@ -9,18 +9,23 @@ import { Intonation, Intonations } from '../imports/api/db/intonation';
 
 import {Empath} from '../imports/extra/empath';
 
+import {SocketIo} from './socket_io';
+const PORT = 8080; //process.env.PORT || 8080;
+
 Meteor.startup(() => {
   // 初期データ投入
   fncDataInit();
 
   //感情認識テスト
   //testEmpath();
+
+  SocketIo.init(PORT);
 });
 
 // 初期データ投入
 function fncDataInit(){
     //Service情報
-    const serviceInfo = ServiceInfo.create("Neko",8000);
+    const serviceInfo = ServiceInfo.create("Neko",PORT);
     if (ServiceInfos.find().count() === 0) {
         ServiceInfos.insert(serviceInfo);
     }
@@ -55,11 +60,11 @@ function fncDataInit(){
     if (ChatRooms.find().count() === 0) {
       const room = ChatRoom.create("SampleRoom");
       //メンバー追加
-      room.addMember(owner);
-      room.addMember(device);
+      room.members.push(owner);
+      room.members.push(device);
       //メッセージ追加
-      room.addMessage(Message.create(owner,Message.TYPE_TEXT,"こんにちは"));
-      room.addMessage(Message.create(device,Message.TYPE_WAV,"sample.wav"));
+      room.messages.push(Message.create(owner,Message.TYPE_TEXT,"こんにちは"));
+      room.messages.push(Message.create(device,Message.TYPE_WAV,"sample.wav"));
       const list = [
         room
       ];

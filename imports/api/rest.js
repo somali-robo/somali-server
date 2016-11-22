@@ -1,4 +1,5 @@
 import { Restivus } from 'meteor/nimble:restivus';
+import { Intonation,Intonations } from './db/intonation';
 import { Device,Devices } from './db/device';
 import { Owner,Owners } from './db/owner';
 import { ChatRoom,ChatRooms } from './db/chat_room';
@@ -7,6 +8,18 @@ import { Message } from './db/message';
 
 export const Api = new Restivus({
   prettyJson: true,
+});
+
+Api.addRoute('intonations', {
+  // GET /api/intonations
+  get: {
+    action: function() {
+      return {
+        status: 'success',
+        data: Intonations.find().fetch(),
+      };
+    },
+  }
 });
 
 Api.addRoute('devices/:id', {

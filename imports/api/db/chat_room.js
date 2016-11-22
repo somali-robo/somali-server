@@ -13,24 +13,10 @@ ChatRoom.prototype.createdAt = "";
 ChatRoom.create = function(name){
   var result = new ChatRoom();
   result.name  = name;
+  result.members = [];
+  result.messages = [];
   result.createdAt = new Date();
   return result;
-};
-
-/** ルーム メンバー追加
-* Owner,Device を メンバーとして追加する
-*/
-ChatRoom.prototype.addMember = function(member){
-  //TODO: 追加 or 上書き を確認する必要がある
-  this.members.push(member);
-};
-
-/** ルーム に メッセージを追加
-*
-*/
-ChatRoom.prototype.addMessage = function(message){
-  //TODO: 追加 or 上書き を確認する必要がある
-  this.messages.push(message);
 };
 
 const ChatRooms = new Mongo.Collection('chat_rooms');
