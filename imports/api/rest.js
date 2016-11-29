@@ -109,8 +109,8 @@ Api.addRoute('chat_rooms', {
   // POST /api/chat_rooms
   post: {
     action: function() {
-      const {id, name} = this.bodyParams;
-      const obj = ChatRoom.create(id,name);
+      const {name} = this.bodyParams;
+      const obj = ChatRoom.create(name);
       const res = ChatRooms.insert(obj);
       return {
         status: 'success',
@@ -118,6 +118,50 @@ Api.addRoute('chat_rooms', {
       };
     },
   },
+});
+
+Api.addRoute('chat_rooms/:id', {
+  // GET /api/chat_rooms/:id
+  get: {
+    action: function() {
+      var data = ChatRooms.findOne(this.urlParams.id);
+      if(!data) data = [];
+      return {
+        status: 'success',
+        data: data
+      };
+    },
+  },
+  // DELETE /api/devices/:id
+  delete: {
+    action: function () {
+        if (ChatRooms.remove(this.urlParams.id)) {
+          return {status: 'success', data: {message: 'ChatRooms removed'}};
+        }
+        return {
+          statusCode: 404,
+          body: {status: 'fail', message: 'ChatRooms not found'}
+        };
+      }
+  },
+  // PUT /api/devices/:id
+  put: {
+    action: function () {
+        var {name,members,messages} = this.bodyParams;
+        var data = ChatRooms.findOne(this.urlParams.id);
+        if(data){
+            //更新
+            if(!members) members = [];
+            if(!messages) messages = [];
+            ChatRooms.update({_id:data._id}, {name:name, members:members, messages:messages,createdAt:data.createdAt});
+            return {status: 'success', data: {message: 'ChatRooms update'}};
+        }
+        return {
+          statusCode: 404,
+          body: {status: 'fail', message: 'ChatRooms not found'}
+        };
+      }
+  }
 });
 
 Api.addRoute('service_infos', {
@@ -130,7 +174,7 @@ Api.addRoute('service_infos', {
       };
     },
   },
-  // POST /api/chat_rooms
+  // POST /api/service_infos
   post: {
     action: function() {
       const {name,port} = this.bodyParams;
