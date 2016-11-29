@@ -50,15 +50,6 @@ SocketIo.init = function(port){
 SocketIo.fncSocketIoInit = function(listener){
   const _this = this;
   const server = http.createServer();
-  // Socket.io Start server
-  console.log("Socket.io Start server");
-  console.log("PORT "+this.PORT);
-  try {
-    server.listen(this.PORT);
-  } catch (e) {
-    console.error(e);
-  }
-  
   const io = socket_io(server);
 
   var connection = function(socket,listener) {
@@ -118,6 +109,14 @@ SocketIo.fncSocketIoInit = function(listener){
     connection(socket,listener);
   });
 
+  // Socket.io Start server
+  console.log("Socket.io Start server");
+  console.log("PORT "+this.PORT);
+  try {
+    server.listen(this.PORT);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export { SocketIo };

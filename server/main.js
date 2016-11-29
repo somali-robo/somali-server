@@ -10,7 +10,7 @@ import { Intonation, Intonations } from '../imports/api/db/intonation';
 import {Empath} from '../imports/extra/empath';
 
 import {SocketIo} from './socket_io';
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 Meteor.startup(() => {
   // 初期データ投入
