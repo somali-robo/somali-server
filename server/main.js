@@ -24,7 +24,7 @@ Meteor.startup(() => {
 
   //データを公開する
   Meteor.publish("devices", function () {
-    return Devices.find().fetch();
+    return Devices.find({});
   });
 });
 
