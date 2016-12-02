@@ -10,7 +10,7 @@ import { Intonation, Intonations } from '../imports/api/db/intonation';
 import {Empath} from '../imports/extra/empath';
 
 import {SocketIo} from './socket_io';
-const PORT = 8080; //process.env.PORT || 3000;
+const SOCKET_PORT = parseInt(process.env.SOCKET_PORT)||3003;
 
 Meteor.startup(() => {
   // 初期データ投入
@@ -19,13 +19,13 @@ Meteor.startup(() => {
   //感情認識テスト
   //testEmpath();
 
-  SocketIo.init(PORT);
+  SocketIo.init(SOCKET_PORT);
 });
 
 // 初期データ投入
 function fncDataInit(){
     //Service情報
-    const serviceInfo = ServiceInfo.create("Neko",PORT);
+    const serviceInfo = ServiceInfo.create("Neko",SOCKET_PORT);
     if (ServiceInfos.find().count() === 0) {
         ServiceInfos.insert(serviceInfo);
     }
