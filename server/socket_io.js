@@ -53,12 +53,14 @@ SocketIo.fncSocketIoInit = function(listener){
   const _this = this;
   const WebSocketServer = ws.Server;
   const app = express();
+  app.use(express.static(__dirname + "/"))
+
   const server = http.createServer(app);
   server.listen(this.PORT);
 
   const wss = new WebSocketServer({server: server});
   wss.on("connection", function(ws) {
-    
+
     var id = setInterval(function() {
       var data = JSON.stringify(new Date());
       console.log("send");
