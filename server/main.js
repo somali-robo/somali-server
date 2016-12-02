@@ -23,9 +23,10 @@ Meteor.startup(() => {
   //SocketIo.init(SOCKET_PORT);
 
   //データを公開する
+  /*
   Meteor.publish("devices", function () {
     return Devices.find();
-  });
+  });*/
 });
 
 // 初期データ投入
