@@ -6,10 +6,8 @@ import {Owner,Owners} from '../imports/api/db/owner';
 import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
 import {Message} from '../imports/api/db/message';
 
-var WebSocketServer = require("ws").Server;
-var http = require("http");
-var express = require("express");
-var app = express();
+const WebSocketServer = require("ws").Server;
+const http = require("http");
 
 var SocketIo = function(){};
 SocketIo.PORT = null;
@@ -54,8 +52,7 @@ SocketIo.init = function(port){
 SocketIo.fncSocketIoInit = function(listener){
   const _this = this;
 
-  app.use(express.static(__dirname + "/"));
-  var server = http.createServer(app);
+  var server = http.createServer();
   server.listen(this.PORT);
 
   const wss = new WebSocketServer({server: server});
