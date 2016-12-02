@@ -52,10 +52,10 @@ SocketIo.init = function(port){
 SocketIo.fncSocketIoInit = function(listener){
   const _this = this;
   /*
-  const WebSocketServer = ws.Server;
   const app = express();
   app.use(express.static(__dirname + "/"));
 */
+  const WebSocketServer = ws.Server;
   const server = http.createServer();
   server.listen(this.PORT);
 
