@@ -6,11 +6,6 @@ import {Owner,Owners} from '../imports/api/db/owner';
 import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
 import {Message} from '../imports/api/db/message';
 
-/*
-import ws from 'ws';
-import express from "express";
-import http from 'http';
-*/
 var WebSocketServer = require("ws").Server;
 var http = require("http");
 var express = require("express");
