@@ -58,6 +58,7 @@ SocketIo.fncSocketIoInit = function(listener){
 
   const wss = new WebSocketServer({server: server});
   wss.on("connection", function(ws) {
+    
     var id = setInterval(function() {
       var data = JSON.stringify(new Date());
       console.log("send");
