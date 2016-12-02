@@ -5,9 +5,16 @@ import {Owner,Owners} from '../imports/api/db/owner';
 import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
 import { Message } from '../imports/api/db/message';
 
+/*
 import ws from 'ws';
 import express from "express";
 import http from 'http';
+*/
+var WebSocketServer = require("ws").Server
+var http = require("http")
+var express = require("express")
+var app = express()
+var port = process.env.PORT || 5000
 
 var SocketIo = function(){};
 SocketIo.PORT = null;
@@ -51,12 +58,9 @@ SocketIo.init = function(port){
 //Socket.io 初期化
 SocketIo.fncSocketIoInit = function(listener){
   const _this = this;
-  /*
-  const app = express();
+
   app.use(express.static(__dirname + "/"));
-*/
-  const WebSocketServer = ws.Server;
-  const server = http.createServer();
+  var server = http.createServer(app);
   server.listen(this.PORT);
 
   const wss = new WebSocketServer({server: server});
