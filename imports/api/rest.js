@@ -6,6 +6,8 @@ import { ChatRoom,ChatRooms } from './db/chat_room';
 import { ServiceInfo,ServiceInfos } from './db/service_info';
 import { Message } from './db/message';
 
+import {Document,Documents} from './db/document';
+
 export const Api = new Restivus({
   prettyJson: true,
 });
@@ -178,7 +180,7 @@ Api.addRoute('service_infos', {
   post: {
     action: function() {
       const {name,port} = this.bodyParams;
-      const obj = ServiceInfos.create(name,port);
+      const obj = ServiceInfo.create(name,port);
       const res = ServiceInfos.insert(obj);
       return {
         status: 'success',
@@ -188,4 +190,29 @@ Api.addRoute('service_infos', {
   },
 });
 
+Api.addRoute('documents', {
+  // GET /api/documents
+  get: {
+    action: function() {
+      return {
+        status: 'success',
+        data: Documents.find().fetch(),
+      };
+    },
+  }
+});
+
+Api.addRoute('documents/:id', {
+  // GET /api/documents/:id
+  get: {
+    action: function() {
+      const obj = Document.create(this.urlParams.id,"new");
+      const res = Documents.insert(obj);
+      return {
+        status: 'success',
+        data: res
+      };
+    },
+  }
+});
 export default Api;

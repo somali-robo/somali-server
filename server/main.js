@@ -7,6 +7,8 @@ import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
 import {Message} from '../imports/api/db/message';
 import {Intonation, Intonations} from '../imports/api/db/intonation';
 
+import {Document,Documents} from '../imports/api/db/document';
+
 import {Empath} from '../imports/extra/empath';
 
 import {SocketIo} from './socket_io';
@@ -23,13 +25,22 @@ Meteor.startup(() => {
   //SocketIo.init(SOCKET_PORT);
 
   //データを公開する
-  Meteor.publish("devices", function () {
-    return Devices.find({});
+  Meteor.publish("documents", function () {
+    return Documents.find({});
   });
 });
 
 // 初期データ投入
 function fncDataInit(){
+    const list = [
+      Document.create("HIJKLMN","Sample02"),
+      Document.create("XXXXXXX","Sample03")
+    ];
+    //初期データを書き込む
+    list.forEach(data => {
+       data._id = Documents.insert(data);
+    });
+
     console.log("fncDataInit "+SOCKET_PORT);
     //Service情報
     const serviceInfo = ServiceInfo.create("Neko",SOCKET_PORT);
