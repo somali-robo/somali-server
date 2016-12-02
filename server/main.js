@@ -19,7 +19,8 @@ Meteor.startup(() => {
 
   //感情認識テスト
   //testEmpath();
-  SocketIo.init(SOCKET_PORT);
+  
+  //SocketIo.init(SOCKET_PORT);
 });
 
 // 初期データ投入
