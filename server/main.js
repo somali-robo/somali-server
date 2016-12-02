@@ -10,7 +10,7 @@ import { Intonation, Intonations } from '../imports/api/db/intonation';
 import {Empath} from '../imports/extra/empath';
 
 import {SocketIo} from './socket_io';
-const SOCKET_PORT = parseInt(process.env.PORT)||5000;
+const SOCKET_PORT = parseInt(process.env.SOCKET_PORT)||5000;
 
 Meteor.startup(() => {
   // 初期データ投入
@@ -18,7 +18,6 @@ Meteor.startup(() => {
 
   //感情認識テスト
   //testEmpath();
-
   SocketIo.init(SOCKET_PORT);
 });
 
