@@ -1,20 +1,20 @@
 /** Socket.io 関連処理を実装する
 */
+import {Meteor} from 'meteor/meteor';
 import {Device,Devices} from '../imports/api/db/device';
 import {Owner,Owners} from '../imports/api/db/owner';
 import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
-import { Message } from '../imports/api/db/message';
+import {Message} from '../imports/api/db/message';
 
 /*
 import ws from 'ws';
 import express from "express";
 import http from 'http';
 */
-var WebSocketServer = require("ws").Server
-var http = require("http")
-var express = require("express")
-var app = express()
-var port = process.env.PORT || 5000
+var WebSocketServer = require("ws").Server;
+var http = require("http");
+var express = require("express");
+var app = express();
 
 var SocketIo = function(){};
 SocketIo.PORT = null;
