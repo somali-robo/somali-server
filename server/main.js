@@ -19,8 +19,13 @@ Meteor.startup(() => {
 
   //感情認識テスト
   //testEmpath();
-  
+
   //SocketIo.init(SOCKET_PORT);
+
+  //データを公開する
+  Meteor.publish("devices", function () {
+    return Devices.find();
+  });
 });
 
 // 初期データ投入
