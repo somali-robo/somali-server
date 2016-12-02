@@ -25,7 +25,6 @@ Meteor.startup(() => {
 // 初期データ投入
 function fncDataInit(){
     console.log("fncDataInit "+SOCKET_PORT);
-
     //Service情報
     const serviceInfo = ServiceInfo.create("Neko",SOCKET_PORT);
     if (ServiceInfos.find().count() === 0) {
