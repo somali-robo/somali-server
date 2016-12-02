@@ -4,8 +4,10 @@ import {Device,Devices} from '../imports/api/db/device';
 import {Owner,Owners} from '../imports/api/db/owner';
 import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
 import { Message } from '../imports/api/db/message';
+
+import ws from 'ws';
+import express from "express";
 import http from 'http';
-import socket_io from 'socket.io';
 
 var SocketIo = function(){};
 SocketIo.PORT = null;
@@ -49,9 +51,41 @@ SocketIo.init = function(port){
 //Socket.io 初期化
 SocketIo.fncSocketIoInit = function(listener){
   const _this = this;
-  const server = http.createServer();
-  const io = socket_io(server);
+  const WebSocketServer = ws.Server;
+  const app = express();
+  const server = http.createServer(app);
+  server.listen(this.PORT);
 
+  const wss = new WebSocketServer({server: server});
+  wss.on("connection", function(ws) {
+    var id = setInterval(function() {
+      var data = JSON.stringify(new Date());
+      console.log("send");
+      console.log(data);
+      ws.send(data, function() {  })
+    }, 1000)
+
+    console.log("websocket connection open");
+
+    ws.on("connected", function (data) {
+      console.log("connected");
+      console.log(data);
+    });
+
+    ws.on("message", function (data) {
+      console.log("message");
+      console.log(data);
+      //リスナーに通知
+      listener('message',data);
+    });
+
+    ws.on("close", function() {
+      console.log("websocket connection close")
+      clearInterval(id)
+    })
+  });
+
+/*
   var connection = function(socket,listener) {
     //console.log('new socket client');
     // 接続開始カスタムイベント(接続元ユーザを保存し、他ユーザへ通知)
@@ -72,7 +106,7 @@ SocketIo.fncSocketIoInit = function(listener){
       console.log(data);
 
       io.sockets.emit("message", data);
-      /*
+
       //ルームIDで保存されたSocket全てに送信
       const roomId = data["roomId"];
       for(i in _this.roomSocketIds[roomId]){
@@ -80,7 +114,6 @@ SocketIo.fncSocketIoInit = function(listener){
         const socketId = _this.roomSocketIds[roomId][i];
         io.sockets.to(socketId).json.emit("message", data);
       }
-      */
       //リスナーに通知
       listener('message',data);
     });
@@ -103,20 +136,7 @@ SocketIo.fncSocketIoInit = function(listener){
       }
     });
   };
-
-  // Socket.io New client
-  io.on('connection', function(socket) {
-    connection(socket,listener);
-  });
-
-  // Socket.io Start server
-  console.log("Socket.io Start server");
-  console.log("PORT "+this.PORT);
-  try {
-    server.listen(this.PORT);
-  } catch (e) {
-    console.error(e);
-  }
+*/
 };
 
 export { SocketIo };
