@@ -51,11 +51,12 @@ SocketIo.init = function(port){
 //Socket.io 初期化
 SocketIo.fncSocketIoInit = function(listener){
   const _this = this;
+  /*
   const WebSocketServer = ws.Server;
   const app = express();
-  app.use(express.static(__dirname + "/"))
-
-  const server = http.createServer(app);
+  app.use(express.static(__dirname + "/"));
+*/
+  const server = http.createServer();
   server.listen(this.PORT);
 
   const wss = new WebSocketServer({server: server});
@@ -79,7 +80,7 @@ SocketIo.fncSocketIoInit = function(listener){
       console.log("message");
       console.log(data);
       //リスナーに通知
-      listener('message',data);
+      //listener('message',data);
     });
 
     ws.on("close", function() {
