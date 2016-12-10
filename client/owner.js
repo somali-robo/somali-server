@@ -7,6 +7,7 @@ import { Owner, Owners } from '../imports/api/db/owner';
 
 Template.ownerTemplate.onCreated(function() {
   console.log("ownerTemplate onCreated");
+  Meteor.subscribe('owners');
 });
 
 Template.ownerTemplate.helpers({

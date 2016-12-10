@@ -10,6 +10,7 @@ import { Intonation, Intonations } from '../imports/api/db/intonation';
 
 Template.intonationTemplate.onCreated(function() {
   console.log("Intonation onCreated");
+  Meteor.subscribe('intonations');
 });
 
 Template.intonationTemplate.helpers({
@@ -59,7 +60,7 @@ Template.intonationTemplate.events({
                         +"<td><input id='energy' type='text' value='"+energy+"'></td>"
                         +"</tr>"
                         +"</table>";
-                        
+
         const dialog = bootbox.confirm({
             title:id,
             message: html,

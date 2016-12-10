@@ -25,3 +25,6 @@ http
 nimble:restivus
 meteorhacks:async
 mizzao:bootboxjs
+cfs:filesystem
+cfs:dropbox
+cfs:standard-packages

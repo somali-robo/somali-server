@@ -10,6 +10,7 @@ import { ChatRoom, ChatRooms } from '../imports/api/db/chat_room';
 
 Template.chatTemplate.onCreated(function() {
   console.log("chatTemplate onCreated");
+  Meteor.subscribe('chat_rooms');
 });
 
 Template.chatTemplate.helpers({
@@ -24,7 +25,7 @@ Template.chatTemplate.events({
         const name = currentTarget.data('name');
         const id = currentTarget.data('id');
         console.log("id:"+id);
-        
+
         //確認ダイアログを表示
         const msg = name+"を削除しますが、よろしいですか？";
         const confirm = bootbox.confirm(msg, function(result) {
@@ -38,8 +39,13 @@ Template.chatTemplate.events({
     'click .btnDetail': function(event, template) {
         console.log('btnDetail');
         const msg = "詳細を表示する";
-        const confirm = bootbox.confirm(msg, function(result) {
 
-        });
+        //シリアルコードを取得して、セッションに設定
+        const currentTarget = $(event.currentTarget);
+        const serialCode = currentTarget.data('serial-code');
+        Session.set("serialCode",serialCode);
+
+        //詳細ページを表示
+        Session.set("isMenu","chatDetail");
     }
 });

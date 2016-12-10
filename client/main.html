@@ -26,11 +26,10 @@
         <li>{{> loginButtons}}</li>
       </ul>
       <ul>
-        <li class='clickMenu' data-menu="serviceInfo">サービス情報</li>
         <li class='clickMenu' data-menu="device">デバイス</li>
         <li class='clickMenu' data-menu="owner">オーナー</li>
         <li class='clickMenu' data-menu="chat">チャット</li>
-        <li class='clickMenu' data-menu="sendAll">一斉送信</li>
+        <li class='clickMenu' data-menu="broadcastMessage">一斉送信</li>
         <li class='clickMenu' data-menu="intonation">抑揚認識発話</li>
       </ul>
     </div>
@@ -38,11 +37,13 @@
 
 <template name="mainTemplate">
   <div id="mainContainer" class="col-md-8">
-    {{#if isMenu "serviceInfo"}}{{> serviceInfoTemplate}}{{/if}}
     {{#if isMenu "device"}}{{> deviceTemplate}}{{/if}}
     {{#if isMenu "owner"}}{{> ownerTemplate}}{{/if}}
     {{#if isMenu "chat"}}{{> chatTemplate}}{{/if}}
-    {{#if isMenu "sendAll"}}{{> sendAllTemplate}}{{/if}}
+    {{#if isMenu "broadcastMessage"}}{{> broadcastMessageTemplate}}{{/if}}
     {{#if isMenu "intonation"}}{{> intonationTemplate}}{{/if}}
+    
+    <!-- チャット詳細 -->
+    {{#if isMenu "chatDetail"}}{{> chatDetailTemplate}}{{/if}}
   </div>
 </template>

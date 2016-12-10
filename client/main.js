@@ -21,7 +21,7 @@ Template.loginTemplate.onCreated(function() {
   login();
 
   //初期画面を サービス情報に設定
-  Session.set("isMenu","serviceInfo");
+  Session.set("isMenu","device");
 });
 
 Template.loginTemplate.helpers({
@@ -54,7 +54,7 @@ Template.mainTemplate.helpers({
 });
 
 Template.menuTemplate.events({
-    // ボタンのクリックイベント
+    // メニューのクリックイベント
     'click .clickMenu': function(event, template) {
         console.log('clickMenu');
         const currentTarget = $(event.currentTarget);

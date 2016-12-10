@@ -21,8 +21,7 @@ Empath.TYPE ={
 */
 Empath.analyzeWav = function(apiKey,wavPath,callback){
   //POST multipart/form-data
-  console.log( Assets.absoluteFilePath(wavPath) );
-  var wavFile = this.fs.createReadStream( Assets.absoluteFilePath(wavPath) );
+  var wavFile = this.fs.createReadStream( wavPath );
   var url = this.API_BASE_URL+this.API_ANALYZE_WAV;
   var formData = {
     apikey: apiKey,

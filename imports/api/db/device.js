@@ -7,6 +7,7 @@ const Device = function(){};
 Device.prototype.serialCode = "";
 Device.prototype.name = "";
 Device.prototype.createdAt = "";
+Device.prototype.isActive = false;
 
 Device.create = function(serialCode,name){
   var result = new Device();

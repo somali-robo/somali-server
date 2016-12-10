@@ -1,6 +1,5 @@
 import {Meteor} from 'meteor/meteor';
 import '../imports/api/rest';
-import {ServiceInfo,ServiceInfos} from '../imports/api/db/service_info';
 import {Device,Devices} from '../imports/api/db/device';
 import {Owner,Owners} from '../imports/api/db/owner';
 import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
@@ -9,11 +8,16 @@ import {Intonation, Intonations} from '../imports/api/db/intonation';
 
 import {Document,Documents} from '../imports/api/db/document';
 
+import {Config} from '../imports/config';
+
 import {Empath} from '../imports/extra/empath';
+import {Dropbox} from '../imports/extra/dropbox';
 
-import {SocketIo} from './socket_io';
-
-const SOCKET_PORT = process.env.PORT || 5000;
+if (Meteor.isServer) {
+  console.log("Meteor.publish");
+  //データを公開する
+  dataPublish();
+}
 
 Meteor.startup(() => {
   // 初期データ投入
@@ -22,13 +26,30 @@ Meteor.startup(() => {
   //感情認識テスト
   //testEmpath();
 
-  //SocketIo.init(SOCKET_PORT);
-
-  //データを公開する
-  Meteor.publish("documents", function () {
-    return Documents.find({});
-  });
+  //Dropboxテスト
+  //testDropbox();
 });
+
+function dataPublish(){
+  Meteor.publish("documents", function () {
+    return Documents.find();
+  });
+  Meteor.publish("devices", function () {
+    return Devices.find();
+  });
+  Meteor.publish("owners", function () {
+    return Owners.find();
+  });
+  Meteor.publish("chat_rooms", function () {
+    return ChatRooms.find();
+  });
+  Meteor.publish("intonations", function () {
+    return Intonations.find();
+  });
+  Meteor.publish("broadcast_messages", function () {
+    return BroadcastMessages.find();
+  });
+};
 
 // 初期データ投入
 function fncDataInit(){
@@ -40,13 +61,6 @@ function fncDataInit(){
     list.forEach(data => {
        data._id = Documents.insert(data);
     });
-
-    console.log("fncDataInit "+SOCKET_PORT);
-    //Service情報
-    const serviceInfo = ServiceInfo.create("Neko",SOCKET_PORT);
-    if (ServiceInfos.find().count() === 0) {
-        ServiceInfos.insert(serviceInfo);
-    }
 
     const device = Device.create("ABCDEFG","Sample01");
     //デバイス登録
@@ -82,7 +96,9 @@ function fncDataInit(){
       room.members.push(device);
       //メッセージ追加
       room.messages.push(Message.create(owner,Message.TYPE_TEXT,"こんにちは"));
-      room.messages.push(Message.create(device,Message.TYPE_WAV,"sample.wav"));
+      var wavMsg = Message.create(device,Message.TYPE_WAV,"sample.wav");
+      wavMsg.empath = {"error":0,"calm":0,"anger":23,"joy":26,"sorrow":0,"energy":49};
+      room.messages.push(wavMsg);
       const list = [
         room
       ];
@@ -117,9 +133,9 @@ function fncDataInit(){
 */
 function testEmpath(){
   // private/sample1.wav
-  const EMPATH_API_KEY = "1F6DaJqjXSM2Xxe4aE0u5N5quLOsAtfUdrOqYEJ3ktE";
-  Empath.analyzeWav(EMPATH_API_KEY,
-    "sample1.wav",
+  const wavPath = Assets.absoluteFilePath("sample1.wav");
+  Empath.analyzeWav(Config.EMPATH_API_KEY,
+    wavPath,
     function(result,err){
       if(err){
         console.log(err);
@@ -127,4 +143,30 @@ function testEmpath(){
       }
       console.log("result: " + JSON.stringify(result));
     });
-}
+};
+
+function testDropbox(){
+  Dropbox.init(Config.DROPBOX_ACCESS_TOKEN,function(err, res, body) {
+    console.log("Dropbox.init");
+    //console.log(body);
+    Dropbox.getFile("sample.wav",function(err, res, body, filePath){
+        console.log("Dropbox.getFile");
+        if(err){
+          console.log(err);
+          return;
+        }
+        //console.log(res);
+        console.log(filePath);
+
+        Empath.analyzeWav(Config.EMPATH_API_KEY,
+          filePath,
+          function(result,err){
+            if(err){
+              console.log(err);
+              return;
+            }
+            console.log("result: " + JSON.stringify(result));
+          });
+    });
+  });
+};

@@ -7,6 +7,7 @@ import { Device, Devices } from '../imports/api/db/device';
 
 Template.deviceTemplate.onCreated(function() {
   console.log("deviceTemplate onCreated");
+  Meteor.subscribe('devices');
 });
 
 Template.deviceTemplate.helpers({

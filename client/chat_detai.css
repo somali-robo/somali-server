@@ -1,0 +1,59 @@
+/* チャット詳細 */
+.chat_detail_container {
+  list-style: none;
+}
+
+.chat_detail_container li{
+  height: 85px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* メンバー */
+.chat_detail_container .member{
+  background-color: #ccffff;
+  color: #0066cc;
+}
+
+.chat_detail_container .member:before {
+  content: url(icon75.png);
+  float: left;
+  margin-top: 2px;
+  margin-right: 10px;
+}
+
+/* デバイス */
+.chat_detail_container .device{
+  /*background-color: #cacaca;*/
+  color: #000;
+}
+.chat_detail_container .device:before {
+  content: url(device75.png);
+  float: left;
+  margin-top: 2px;
+  margin-right:10px;
+}
+
+.chat_detail_container .device ul.empath{
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chat_detail_container .device .empath li{
+  height: 15px;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.chat_detail_container .device .empath li p.label{
+  float: left;
+  color: #000;
+  margin-top: 2px;
+}
+.chat_detail_container .device .empath li p.value{
+  float: left;
+  color: #000;
+}

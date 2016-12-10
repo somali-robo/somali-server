@@ -1,0 +1,41 @@
+<template name="chatDetailTemplate">
+  <h1>チャット詳細</h1>
+  <p class='clickMenu' data-menu="chat">戻る</p>
+  <div id="chatDetailContainer" class="col-md-10">
+      <ul class="chat_detail_container">
+        {{#each room.messages}}
+          {{> chatDetailRow}}
+        {{/each}}
+      </ul>
+  </div>
+</template>
+
+<template name="chatDetailRow">
+  {{#if isMember from}}{{> chatDetailMember}}{{else}}{{> chatDetailDevice}}{{/if}}
+</template>
+
+<template name="chatDetailMember">
+  <li class="member">
+    <p class="name">{{from.name}}</p>
+    <p class="value">{{value}}</p>
+  </li>
+</template>
+
+<template name="chatDetailDevice">
+  <li class="device">
+    <p class="name">{{from.serialCode}}</p>
+    <p class="value">{{value}}</p>
+    <p class="empath">{{> chatDetailEmpath}}</p>
+  </li>
+</template>
+
+<template name="chatDetailEmpath">
+  <ul class="empath">
+    <li><p class="label">エラーコード</p><p class="value">{{empath.error}}</p></li>
+    <li><p class="label">平常</p><p class="value">{{empath.calm}}</p></li>
+    <li><p class="label">怒り</p><p class="value">{{empath.anger}}</p></li>
+    <li><p class="label">喜び</p><p class="value">{{empath.joy}}</p></li>
+    <li><p class="label">悲しみ</p><p class="value">{{empath.sorrow}}</p></li>
+    <li><p class="label">興奮度</p><p class="value">{{empath.energy}}</p></li>
+  </ul>
+</template>
