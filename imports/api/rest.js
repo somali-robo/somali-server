@@ -285,7 +285,7 @@ Api.addRoute('chat_rooms/:id/messages', {
               };
               dropboxDownload(fileName,Meteor.bindEnvironment(callback));
             }
-            else if(message.type == 'text'){
+            else if((message.type == 'text')||(message.type == 'alert')){
               //textの場合
               room.messages.push(message);
               ChatRooms.update({_id:room._id}, room);
