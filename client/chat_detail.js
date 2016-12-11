@@ -12,11 +12,11 @@ Template.chatDetailTemplate.onCreated(function() {
   console.log("chatDetailTemplate onCreated");
   Meteor.subscribe('chat_rooms');
 
-  serialCode = Session.get("serialCode");
+  chatRoomId = Session.get("chatRoomId");
 });
 
 Template.chatDetailTemplate.helpers({
-  room:() => ChatRooms.findOne({"members.device.serialCode":serialCode}),
+  room:() => ChatRooms.findOne({"_id":chatRoomId}),
   isDevice:function(from){
     return from.serialCode != null;
   }

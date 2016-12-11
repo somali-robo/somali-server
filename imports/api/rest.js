@@ -51,6 +51,7 @@ Api.addRoute('owners', {
       const { id, name, deviceId} = this.bodyParams;
       const obj = Owner.create(id,name,deviceId);
       const res = Owners.insert(obj);
+      obj._id = res;
       return {
         status: 'success',
         data: Owners.findOne(res),
@@ -113,6 +114,26 @@ Api.addRoute('devices/active/:active', {
 });
 
 Api.addRoute('devices/serial_code/:serialCode', {
+  // POST /api/devices/serial_code/:serialCode
+  post: {
+    action: function() {
+      console.log("POST /api/devices/serial_code/:serialCode");
+      const serialCode = this.urlParams.serialCode
+      //デバイスが既に登録されているかを確認する
+      var obj = Devices.findOne({"serialCode":serialCode});
+      if(!obj){
+        //無かった場合 デバイスを新規作成
+        const {name} = this.bodyParams;
+        obj = Device.create(serialCode,name);
+        const res = Devices.insert(obj);
+        obj._id = res;
+      }
+      return {
+        status: 'success',
+        data: obj
+      };
+    },
+  },
   // PUT /api/devices/serial_code/:serialCode
   put: {
     action: function() {
@@ -149,9 +170,14 @@ Api.addRoute('chat_rooms', {
   // POST /api/chat_rooms
   post: {
     action: function() {
-      const {name} = this.bodyParams;
+      const {name,members,messages} = this.bodyParams;
       const obj = ChatRoom.create(name);
+      obj.members = members;
+      obj.messages = messages;
+      if(!obj.members) obj.members = [];
+      if(!obj.messages) obj.messages = [];
       const res = ChatRooms.insert(obj);
+      obj._id = res;
       return {
         status: 'success',
         data: ChatRooms.findOne(res),
@@ -191,10 +217,10 @@ Api.addRoute('chat_rooms/members/device/:serialCode', {
   get: {
     action: function() {
       const serialCode = this.urlParams.serialCode;
-      var data = ChatRooms.findOne({"members.device.serialCode":serialCode});
+      var data = ChatRooms.find({"members.serialCode":serialCode}).fetch();
       return {
         status: 'success',
-        data: [data]
+        data: data
       };
     },
   }
@@ -226,6 +252,18 @@ var dropboxDownload = function(fileName,callback){
 };
 
 Api.addRoute('chat_rooms/:id/messages', {
+  get:{
+    action: function () {
+      var room = ChatRooms.findOne(this.urlParams.id);
+      if(room){
+        return {status: 'success', data: {messages: room.messages}};
+      }
+      return {
+        statusCode: 404,
+        body: {status: 'fail', message: 'ChatRooms not found'}
+      };
+    }
+  },
   // PUT /api/chat_rooms/:id/messages
   put: {
     action: function () {
@@ -235,6 +273,7 @@ Api.addRoute('chat_rooms/:id/messages', {
             //更新
             console.log("chat_rooms/:id/messages");
             console.log(message);
+            if(!room.messages) room.messages = [];
             if(message.type == 'wav'){
               //Dropboxからファイルダウンロードして 感情認識
               const fileName = message.value;
@@ -277,6 +316,7 @@ Api.addRoute('broadcast_messages', {
       const {name,value} = this.bodyParams;
       const obj = BroadcastMessage.create(name,value);
       const res = BroadcastMessages.insert(obj);
+      obj._id = res;
       return {
         status: 'success',
         data: BroadcastMessages.findOne(res)
@@ -303,6 +343,7 @@ Api.addRoute('documents/:id', {
     action: function() {
       const obj = Document.create(this.urlParams.id,"new");
       const res = Documents.insert(obj);
+      obj._id = res;
       return {
         status: 'success',
         data: res

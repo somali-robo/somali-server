@@ -42,8 +42,8 @@ Template.chatTemplate.events({
 
         //シリアルコードを取得して、セッションに設定
         const currentTarget = $(event.currentTarget);
-        const serialCode = currentTarget.data('serial-code');
-        Session.set("serialCode",serialCode);
+        const id = currentTarget.data('id');
+        Session.set("chatRoomId",id);
 
         //詳細ページを表示
         Session.set("isMenu","chatDetail");

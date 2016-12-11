@@ -14,6 +14,7 @@ Device.create = function(serialCode,name){
   result.serialCode  = serialCode;
   result.name = name;
   result.createdAt = new Date();
+  result.isActive = false;
   return result;
 };
 
