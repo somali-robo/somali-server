@@ -254,9 +254,16 @@ var dropboxDownload = function(fileName,callback){
 Api.addRoute('chat_rooms/:id/messages', {
   get:{
     action: function () {
-      var room = ChatRooms.findOne(this.urlParams.id);
-      if(room){
-        return {status: 'success', data: {messages: room.messages}};
+      const room = ChatRooms.findOne(this.urlParams.id);
+      var messages = room.messages;
+      const length = messages.length;
+      if(messages){
+        const maxLength = 20;
+        if(length > maxLength){
+          messages = messages.splice(-maxLength, maxLength);
+          console.log("result.length:"+messages.length);
+        }
+        return {status: 'success', data: {length:messages.length,messages: messages}};
       }
       return {
         statusCode: 404,
