@@ -12,6 +12,8 @@ import {Empath} from '../extra/empath';
 import {Dropbox} from '../extra/dropbox';
 import {Config} from '../config';
 
+const MESSAGES_MAX_LEGTH = 20;
+
 if (Meteor.isServer) {
   //Dropbox初期化
   Dropbox.init(Config.DROPBOX_ACCESS_TOKEN,function(err, res, body) {
@@ -258,9 +260,8 @@ Api.addRoute('chat_rooms/:id/messages', {
       var messages = room.messages;
       const length = messages.length;
       if(messages){
-        const maxLength = 20;
-        if(length > maxLength){
-          messages = messages.splice(-maxLength, maxLength);
+        if(length > MESSAGES_MAX_LEGTH){
+          messages = messages.splice(-MESSAGES_MAX_LEGTH, MESSAGES_MAX_LEGTH);
           console.log("result.length:"+messages.length);
         }
         return {status: 'success', data: {length:messages.length,messages: messages}};
