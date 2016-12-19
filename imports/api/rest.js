@@ -116,11 +116,30 @@ Api.addRoute('devices/active/:active', {
 });
 
 Api.addRoute('devices/serial_code/:serialCode', {
+  // GET /api/devices/serial_code/:serialCode
+  get: {
+    action: function() {
+      const serialCode = this.urlParams.serialCode;
+      //console.log("PUT devices/serial_code/"+serialCode);
+      //デバイスが既に登録されているかを確認する
+      const obj = Devices.findOne({"serialCode":serialCode});
+      if(!obj){
+        return {
+          statusCode: 404,
+          body: {status: 'fail', message: 'Devices not found'}
+        };
+      }
+      return {
+        status: 'success',
+        data: obj
+      };
+    },
+  },
   // POST /api/devices/serial_code/:serialCode
   post: {
     action: function() {
       console.log("POST /api/devices/serial_code/:serialCode");
-      const serialCode = this.urlParams.serialCode
+      const serialCode = this.urlParams.serialCode;
       //デバイスが既に登録されているかを確認する
       var obj = Devices.findOne({"serialCode":serialCode});
       if(!obj){
@@ -139,7 +158,7 @@ Api.addRoute('devices/serial_code/:serialCode', {
   // PUT /api/devices/serial_code/:serialCode
   put: {
     action: function() {
-      const serialCode = this.urlParams.serialCode
+      const serialCode = this.urlParams.serialCode;
       const {name} = this.bodyParams;
       //console.log("PUT devices/serial_code/"+serialCode);
       //デバイスが既に登録されているかを確認する
