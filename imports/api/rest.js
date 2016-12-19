@@ -276,14 +276,19 @@ Api.addRoute('chat_rooms/:id/messages', {
   get:{
     action: function () {
       const room = ChatRooms.findOne(this.urlParams.id);
-      var messages = room.messages;
-      const length = messages.length;
-      if(messages){
-        if(length > MESSAGES_MAX_LEGTH){
-          messages = messages.splice(-MESSAGES_MAX_LEGTH, MESSAGES_MAX_LEGTH);
-          console.log("result.length:"+messages.length);
+      try{
+        var messages = room.messages;
+        const length = messages.length;
+        if(messages){
+          if(length > MESSAGES_MAX_LEGTH){
+            messages = messages.splice(-MESSAGES_MAX_LEGTH, MESSAGES_MAX_LEGTH);
+            console.log("result.length:"+messages.length);
+          }
+          return {status: 'success', data: {length:messages.length,messages: messages}};
         }
-        return {status: 'success', data: {length:messages.length,messages: messages}};
+      }catch(e){
+        console.log("err e");
+        console.log(e);
       }
       return {
         statusCode: 404,
