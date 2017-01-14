@@ -30,14 +30,6 @@ Meteor.startup(() => {
 
   //Dropboxテスト
   //testDropbox();
-
-  //EventEmitterを開始
-  Emitter.start();
-  Emitter.on("event", function(id, data) {
-    console.log("Emitter event");
-    console.log("id "+id);
-    console.log(data);
-  });
 });
 
 function dataPublish(){
