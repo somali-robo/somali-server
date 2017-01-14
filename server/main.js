@@ -13,8 +13,6 @@ import {Config} from '../imports/config';
 import {Empath} from '../imports/extra/empath';
 import {Dropbox} from '../imports/extra/dropbox';
 
-import {Emitter} from '../imports/extra/emitter';
-
 if (Meteor.isServer) {
   console.log("Meteor.publish");
   //データを公開する
