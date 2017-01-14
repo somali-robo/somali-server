@@ -13,6 +13,8 @@ import {Config} from '../imports/config';
 import {Empath} from '../imports/extra/empath';
 import {Dropbox} from '../imports/extra/dropbox';
 
+import {Emitter} from '../imports/extra/emitter';
+
 if (Meteor.isServer) {
   console.log("Meteor.publish");
   //データを公開する
@@ -28,6 +30,14 @@ Meteor.startup(() => {
 
   //Dropboxテスト
   //testDropbox();
+
+  //EventEmitterを開始
+  Emitter.start();
+  Emitter.on("event", function(id, data) {
+    console.log("Emitter event");
+    console.log("id "+id);
+    console.log(data);
+  });
 });
 
 function dataPublish(){
