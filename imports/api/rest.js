@@ -247,7 +247,7 @@ Api.addRoute('chat_rooms/members/device/:serialCode', {
   }
 });
 
-//TODO: Dropboxからファイルダウンロードして 感情認識
+//Dropboxからファイルダウンロードして 感情認識
 var dropboxDownload = function(fileName,callback){
   //console.log(fileName);
   Dropbox.getFile(fileName,function(err, res, body, filePath){
@@ -338,7 +338,7 @@ Api.addRoute('broadcast_messages', {
     action: function() {
       return {
         status: 'success',
-        data: BroadcastMessages.find().fetch()
+        data: BroadcastMessages.find().fetch().sort({'createdAt':1})
       };
     },
   },
