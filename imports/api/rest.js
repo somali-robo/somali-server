@@ -317,8 +317,8 @@ Api.addRoute('chat_rooms/:id/messages', {
               };
               dropboxDownload(fileName,Meteor.bindEnvironment(callback));
             }
-            else if((message.type == 'text')||(message.type == 'alert')){
-              //textの場合
+            else {
+              //wav以外 text,alert,bgm
               room.messages.push(message);
               ChatRooms.update({_id:room._id}, room);
             }
