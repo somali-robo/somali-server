@@ -336,9 +336,12 @@ Api.addRoute('broadcast_messages', {
   // GET /api/broadcast_messages
   get: {
     action: function() {
+      //.fetch();
+      const data = BroadcastMessages.find({},{sort: {createdAt:1}}).fetch();
+      console.log(data);
       return {
         status: 'success',
-        data: BroadcastMessages.find().fetch().sort({'createdAt':1})
+        data: data
       };
     },
   },
