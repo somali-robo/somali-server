@@ -5,6 +5,7 @@ import {Owner,Owners} from '../imports/api/db/owner';
 import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
 import {Message} from '../imports/api/db/message';
 import {Intonation, Intonations} from '../imports/api/db/intonation';
+import { BroadcastMessage,BroadcastMessages } from '../imports/api/db/broadcast_message';
 
 import {Document,Documents} from '../imports/api/db/document';
 
