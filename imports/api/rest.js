@@ -5,6 +5,7 @@ import { Owner,Owners } from './db/owner';
 import { ChatRoom,ChatRooms } from './db/chat_room';
 import { Message } from './db/message';
 import { BroadcastMessage,BroadcastMessages } from './db/broadcast_message';
+import { Bgm,Bgms } from './db/bgm';
 
 import { Document,Documents } from './db/document';
 
@@ -17,7 +18,7 @@ const MESSAGES_MAX_LEGTH = 20;
 if (Meteor.isServer) {
   //Dropbox初期化
   Dropbox.init(Config.DROPBOX_ACCESS_TOKEN,function(err, res, body) {
-    console.log("Dropbox.init");
+    //console.log("Dropbox.init");
   });
 }
 
@@ -360,6 +361,19 @@ Api.addRoute('broadcast_messages', {
   },
 });
 
+Api.addRoute('bgms', {
+  // GET /api/bgms
+  get: {
+    action: function() {
+      return {
+        status: 'success',
+        data: Bgms.find().fetch(),
+      };
+    },
+  }
+});
+
+// 以下はテスト用 -----
 Api.addRoute('documents', {
   // GET /api/documents
   get: {

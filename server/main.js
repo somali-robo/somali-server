@@ -6,6 +6,7 @@ import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
 import {Message} from '../imports/api/db/message';
 import {Intonation,Intonations} from '../imports/api/db/intonation';
 import {BroadcastMessage,BroadcastMessages} from '../imports/api/db/broadcast_message';
+import {Bgm,Bgms} from '../imports/api/db/bgm';
 
 import {Document,Documents} from '../imports/api/db/document';
 
@@ -31,6 +32,32 @@ Meteor.startup(() => {
   //testDropbox();
 });
 
+Meteor.methods({
+  bgmUpload:function(name,fileName,base64data){
+    console.log("name "+name+" fileName "+fileName);
+
+    //base64文字列からbinaryデータを生成
+    const tmp = base64data.split(',');
+    const data = new Buffer(tmp[1], 'base64');
+
+    Dropbox.upload(fileName, data, Meteor.bindEnvironment(function(err, res, body){
+      console.log("upload callback");
+      //console.log(err);
+      if(err){
+        console.log(err);
+        return;
+      }
+      //console.log(res);
+      //console.log(body);
+      //データ登録
+      const bgm = Bgm.create(name,fileName);
+      Bgms.insert(bgm);
+    }));
+
+    return true;
+  }
+});
+
 function dataPublish(){
   Meteor.publish("documents", function () {
     return Documents.find();
@@ -49,6 +76,10 @@ function dataPublish(){
   });
   Meteor.publish("broadcast_messages", function () {
     return BroadcastMessages.find();
+  });
+
+  Meteor.publish("bgms", function () {
+    return Bgms.find();
   });
 };
 
@@ -127,6 +158,17 @@ function fncDataInit(){
            data._id = Intonations.insert(data);
          });
     }
+
+    //BGMを登録
+    if (Bgms.find().count() === 0) {
+      const list = [
+          Bgm.create("水琴窟","E005004A-F9C7-486B-9217-B36ED679098B-bgm0.wav")
+      ];
+      //初期データを書き込む
+      list.forEach(data => {
+        data._id = Bgms.insert(data);
+      });
+    }
 };
 
 /* 感情認識API のテスト
@@ -148,8 +190,9 @@ function testEmpath(){
 
 function testDropbox(){
   Dropbox.init(Config.DROPBOX_ACCESS_TOKEN,function(err, res, body) {
-    console.log("Dropbox.init");
+    //console.log("Dropbox.init");
     //console.log(body);
+    /*
     Dropbox.getFile("sample.wav",function(err, res, body, filePath){
         console.log("Dropbox.getFile");
         if(err){
@@ -168,6 +211,17 @@ function testDropbox(){
             }
             console.log("result: " + JSON.stringify(result));
           });
+    });
+    */
+
+
+    Dropbox.fs.readFile("assets/app/sample1.wav", (err, data) => {
+        Dropbox.upload("sample-dropbox.wav", data, function(err, res, body){
+          console.log("upload callback");
+          //console.log(err);
+          //console.log(res);
+          //console.log(body);
+        });
     });
   });
 };

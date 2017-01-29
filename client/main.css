@@ -3,3 +3,7 @@
 .menu_logout_container {
   list-style-type: none;
 }
+
+.btnBgmFile {
+  visibility: hidden;
+}
