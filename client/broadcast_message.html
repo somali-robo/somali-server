@@ -1,11 +1,33 @@
 <!-- 一斉送信 -->
 <template name="broadcastMessageTemplate">
   <h1>一斉送信</h1>
-  <form>
-    <div class="form-group">
-      <label for="txtMessage">メッセージ</label>
-      <textarea class="form-control" id="txtMessage" rows="3"></textarea>
-    </div>
-    <button id="btnSendAll" type="button" class="btn btn-primary">送信</button>
-  </form>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Time(HH:MM)</th>
+        <th>Message</th>
+        <th><input type='button' id="btnSendAll" class='btn btn-primary' value='SEND' data-id='{{_id}}' /></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each scheduledBroadcastMessages}}
+        {{> scheduledBroadcastMessageRow}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="scheduledBroadcastMessageRow">
+  <tr>
+    <td>{{time}}</td>
+    <td>{{value}}</td>
+    <td>
+      <input type='button' class='btnClear btn btn-danger' value='CLEAR' data-id='{{_id}}' />
+      <input type='button' class='btnEdit btn btn-info' value='EDIT'
+              data-id='{{_id}}'
+              data-time='{{time}}'
+              data-value='{{value}}'
+              data-createdat='{{createdAt}}'/>
+    </td>
+  </tr>
 </template>

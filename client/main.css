@@ -7,3 +7,8 @@
 .btnBgmFile {
   visibility: hidden;
 }
+
+
+#txtHH,#txtMM{
+  width: 3em;
+}

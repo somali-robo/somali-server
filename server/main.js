@@ -6,6 +6,8 @@ import {ChatRoom,ChatRooms} from '../imports/api/db/chat_room';
 import {Message} from '../imports/api/db/message';
 import {Intonation,Intonations} from '../imports/api/db/intonation';
 import {BroadcastMessage,BroadcastMessages} from '../imports/api/db/broadcast_message';
+import {ScheduledBroadcastMessage,ScheduledBroadcastMessages} from '../imports/api/db/scheduled_broadcast_message';
+
 import {Bgm,Bgms} from '../imports/api/db/bgm';
 
 import {Document,Documents} from '../imports/api/db/document';
@@ -77,10 +79,13 @@ function dataPublish(){
   Meteor.publish("broadcast_messages", function () {
     return BroadcastMessages.find();
   });
-
+  Meteor.publish("scheduled_broadcast_messages", function () {
+    return ScheduledBroadcastMessages.find();
+  });
   Meteor.publish("bgms", function () {
     return Bgms.find();
   });
+
 };
 
 // 初期データ投入
@@ -168,6 +173,14 @@ function fncDataInit(){
       list.forEach(data => {
         data._id = Bgms.insert(data);
       });
+    }
+
+    //スケジュール一斉送信の初期データ
+    if(ScheduledBroadcastMessages.find().count() === 0){
+      for(i=0;i<20;i++){
+        const obj = ScheduledBroadcastMessage.create("","");
+        const res = ScheduledBroadcastMessages.insert(obj);
+      }
     }
 };
 
