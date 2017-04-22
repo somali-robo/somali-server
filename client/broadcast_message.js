@@ -88,8 +88,42 @@ Template.broadcastMessageTemplate.events({
 
         const HHmm = time.split(":");
         const sendFormHtml = "<label for='txtMM'>Time(HH:mm)</label><br />"
-                     +"<input type='number' id='txtHH' value='"+HHmm[0]+"' placeholder='00' />"
-                     +"<input type='number' id='txtMM' value='"+HHmm[1]+"' placeholder='00' />"
+                     +"<select id='txtHH'>"
+                      +"<option value=''></option>"
+                      +"<option value='00'>00</option>"
+                      +"<option value='01'>01</option>"
+                      +"<option value='02'>02</option>"
+                      +"<option value='03'>03</option>"
+                      +"<option value='04'>04</option>"
+                      +"<option value='05'>05</option>"
+                      +"<option value='06'>06</option>"
+                      +"<option value='07'>07</option>"
+                      +"<option value='08'>08</option>"
+                      +"<option value='09'>09</option>"
+                      +"<option value='10'>10</option>"
+                      +"<option value='11'>11</option>"
+                      +"<option value='12'>12</option>"
+                      +"<option value='13'>13</option>"
+                      +"<option value='14'>14</option>"
+                      +"<option value='15'>15</option>"
+                      +"<option value='16'>16</option>"
+                      +"<option value='17'>17</option>"
+                      +"<option value='18'>18</option>"
+                      +"<option value='19'>19</option>"
+                      +"<option value='20'>20</option>"
+                      +"<option value='21'>21</option>"
+                      +"<option value='22'>22</option>"
+                      +"<option value='23'>23</option>"
+                     +"</select>"
+                     +"<select id='txtMM'>"
+                      +"<option value=''></option>"
+                      +"<option value='00'>00</option>"
+                      +"<option value='10'>10</option>"
+                      +"<option value='20'>10</option>"
+                      +"<option value='30'>10</option>"
+                      +"<option value='40'>10</option>"
+                      +"<option value='50'>10</option>"
+                     +"</select>"
                      +"<br />"
                      +"<label for='txtValue'>Value</label><br />"
                      +"<textarea id='txtValue' class='form-control' rows='3'>"+value+"</textarea>";
@@ -117,12 +151,15 @@ Template.broadcastMessageTemplate.events({
                 const t = hh+":"+mm;
                 const v = $("#txtValue").val();
                 const createdAt = new Date();
-                console.log("time "+t+" value"+v);
+                console.log("time "+t+" value "+v);
                 const obj = ScheduledBroadcastMessage.create(t,v);
                 ScheduledBroadcastMessages.update(id,{$set: {time:t,value:v,createdAt:createdAt}});
               }
             }
         });
+
+        $("#txtHH").val(HHmm[0]);
+        $("#txtMM").val(HHmm[1]);
     }
 
 });
