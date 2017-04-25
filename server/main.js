@@ -178,7 +178,7 @@ function fncDataInit(){
     //スケジュール一斉送信の初期データ
     if(ScheduledBroadcastMessages.find().count() === 0){
       for(i=0;i<20;i++){
-        const obj = ScheduledBroadcastMessage.create("","");
+        const obj = ScheduledBroadcastMessage.create(i+1,"","");
         const res = ScheduledBroadcastMessages.insert(obj);
       }
     }

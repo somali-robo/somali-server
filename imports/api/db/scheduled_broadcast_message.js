@@ -4,12 +4,14 @@
 import { Mongo } from 'meteor/mongo';
 
 const ScheduledBroadcastMessage = function(){};
+ScheduledBroadcastMessage.prototype.number = 0;
 ScheduledBroadcastMessage.prototype.time = "";
 ScheduledBroadcastMessage.prototype.value = "";
 ScheduledBroadcastMessage.prototype.createdAt = "";
 
-ScheduledBroadcastMessage.create = function(time,value){
+ScheduledBroadcastMessage.create = function(number,time,value){
   var result = new ScheduledBroadcastMessage();
+  result.number = number;
   result.time  = time;
   result.value  = value;
   result.createdAt = new Date();

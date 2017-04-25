@@ -8,11 +8,10 @@ import { ScheduledBroadcastMessage,ScheduledBroadcastMessages } from '../imports
 Template.broadcastMessageTemplate.onCreated(function() {
   console.log("broadcastMessageTemplate onCreated");
   Meteor.subscribe('scheduled_broadcast_messages');
-
 });
 
 Template.broadcastMessageTemplate.helpers({
-  scheduledBroadcastMessages:() => ScheduledBroadcastMessages.find()
+  scheduledBroadcastMessages:() => ScheduledBroadcastMessages.find({},{sort: {number:1}})
 });
 
 Template.broadcastMessageTemplate.events({
