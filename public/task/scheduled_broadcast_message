@@ -1,3 +1,0 @@
-#!/usr/bin/env node
-
-require('./scheduled_broadcast_message.js');
