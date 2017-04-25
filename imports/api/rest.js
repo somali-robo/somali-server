@@ -5,6 +5,8 @@ import { Owner,Owners } from './db/owner';
 import { ChatRoom,ChatRooms } from './db/chat_room';
 import { Message } from './db/message';
 import { BroadcastMessage,BroadcastMessages } from './db/broadcast_message';
+import { ScheduledBroadcastMessage,ScheduledBroadcastMessages } from './db/scheduled_broadcast_message';
+
 import { Bgm,Bgms } from './db/bgm';
 
 import { Document,Documents } from './db/document';
@@ -359,6 +361,20 @@ Api.addRoute('broadcast_messages', {
       };
     },
   },
+});
+
+Api.addRoute('scheduled_broadcast_messages', {
+  // GET /api/scheduled_broadcast_messages
+  get: {
+    action: function() {
+      const data = ScheduledBroadcastMessages.find({},{sort: {createdAt:1}}).fetch();
+      console.log(data);
+      return {
+        status: 'success',
+        data: data
+      };
+    },
+  }
 });
 
 Api.addRoute('bgms', {
