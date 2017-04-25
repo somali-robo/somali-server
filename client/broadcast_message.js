@@ -40,8 +40,10 @@ Template.broadcastMessageTemplate.events({
               console.log(result);
               if(result){
                 //保存する
-                const value = $("txtValue").val();
+                const value = $("#txtValue").val();
+                console.log(value);
                 const obj = BroadcastMessage.create("System",value);
+                console.log(obj);
                 const res = BroadcastMessages.insert(obj);
               }
             }
