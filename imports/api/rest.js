@@ -339,9 +339,8 @@ Api.addRoute('broadcast_messages', {
   // GET /api/broadcast_messages
   get: {
     action: function() {
-      //.fetch();
       const data = BroadcastMessages.find({},{sort: {createdAt:1}}).fetch();
-      console.log(data);
+      //console.log(data);
       return {
         status: 'success',
         data: data
@@ -368,7 +367,7 @@ Api.addRoute('scheduled_broadcast_messages', {
   get: {
     action: function() {
       const data = ScheduledBroadcastMessages.find({},{sort: {createdAt:1}}).fetch();
-      console.log(data);
+      //console.log(data);
       return {
         status: 'success',
         data: data
