@@ -3,7 +3,7 @@
 const request = require('request');
 
 function App() {
-  this.API_SERVER = "http://localhost:3000";
+  this.API_SERVER = "https://somali-server.herokuapp.com";
   this.API_SCHEDULED_BROADCAST_MESSAGES = "/api/scheduled_broadcast_messages";
   this.API_BROADCAST_MESSAGES = "/api/broadcast_messages";
   this.MESSAGE_INTERVAL_MINUTES = 10;
