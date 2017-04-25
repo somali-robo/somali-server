@@ -36,11 +36,11 @@ function App() {
       //console.log(yymmdd);
       console.log("now "+now);
       for(i in data){
-        let msg = data[i];
+        var msg = data[i];
         console.log(msg);
         if(msg.time != ''){
-          let yymmddhhmmss = yymmdd+" "+msg.time+":00";
-          let d = new Date(Date.parse(yymmddhhmmss));
+          var yymmddhhmmss = yymmdd+" "+msg.time+":00";
+          var d = new Date(Date.parse(yymmddhhmmss));
           console.log("  d "+d);
           //現在時刻 - MESSAGE_INTERVAL_MINUTES のメッセージが送信対象
           if((nowMinutesAgo.getTime() <= d.getTime())
