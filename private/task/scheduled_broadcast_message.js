@@ -37,6 +37,7 @@ function App() {
       console.log("now "+now);
       for(i in data){
         const msg = data[i];
+        console.log(msg);
         if(msg.time == ''){
           continue;
         }
