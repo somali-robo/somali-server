@@ -42,8 +42,8 @@ function App() {
         }
         const yymmddhhmmss = yymmdd+" "+msg.time+":00";
         const d = new Date(Date.parse(yymmddhhmmss));
-        console.log("d "+d);
-        //TODO 現在時刻 - 10分 のメッセージが送信対象
+        console.log("  d "+d);
+        //現在時刻 - MESSAGE_INTERVAL_MINUTES のメッセージが送信対象
         if((nowMinutesAgo.getTime() <= d.getTime())
           && (now.getTime() > d.getTime())){
           //実行する時間のメッセージがあればそれをbroadcast_messageとして書き込む
