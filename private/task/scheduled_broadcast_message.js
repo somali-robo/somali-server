@@ -1,29 +1,55 @@
 /** 定期実行メッセージ
 */
 const request = require('request');
+const CronJob = require('cron').CronJob;
 
+var self = null;
 function App() {
   this.API_SERVER = "https://somali-server.herokuapp.com";
   this.API_SCHEDULED_BROADCAST_MESSAGES = "/api/scheduled_broadcast_messages";
   this.API_BROADCAST_MESSAGES = "/api/broadcast_messages";
-  this.MESSAGE_INTERVAL_MINUTES = 10;
+  this.MESSAGE_INTERVAL_MINUTES = 5;
+  this.CRON_TIME = "00 */10 * * * *";
+  this.cronJob = null;
 
   this.init = function(){
-    //console.log("init");
-    const _this = this;
+    console.log("init");
+    self = this;
+    this.cronJobInit();
+  }
+
+  //CronJobを起動する
+  this.cronJobInit = function(){
+    console.log("cronJobInit");
+    console.log(" now "+(new Date()));
+    //CronJob 開始
+    this.cronJob = new CronJob({
+      cronTime: self.CRON_TIME,
+      onTick: self.cronJobTick,
+      start: true,
+      timeZone: "Asia/Tokyo"
+    });
+  }
+
+  //毎回実行する処理
+  this.cronJobTick = function(){
+    console.log("cronJobTick");
+    console.log(" now "+(new Date()));
+    const _self = self;
     //GET /api/scheduled_broadcast_messages
-    request(this.API_SERVER+this.API_SCHEDULED_BROADCAST_MESSAGES, function (error, response, body) {
+    request(self.API_SERVER+self.API_SCHEDULED_BROADCAST_MESSAGES, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        _this.onScheduledBroadcastMessages(JSON.parse(body));
-      } else {
-        console.log('error: '+ response.statusCode);
+        _self.onScheduledBroadcastMessages(JSON.parse(body));
+      }
+      else {
+        console.log('error: '+ error);
       }
     });
   }
 
   this.onScheduledBroadcastMessages = function(json){
     //console.log(json);
-    const _this = this;
+    const _self = self;
     if(json.status == 'success'){
       const data = json.data;
       if((data == null) || (data.length == 0)){
@@ -34,19 +60,20 @@ function App() {
       const yymmdd = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
       //const time = ("0"+now.getHours()).slice(-2)+":"+("0"+now.getMinutes()).slice(-2);
       //console.log(yymmdd);
-      console.log("now "+now);
+      //console.log("now "+now);
       for(i in data){
         var msg = data[i];
-        console.log(msg);
         if(msg.time != ''){
+          //console.log(msg);
           var yymmddhhmmss = yymmdd+" "+msg.time+":00";
           var d = new Date(Date.parse(yymmddhhmmss));
-          console.log("  d "+d);
+          //console.log("  d "+d);
           //現在時刻 - MESSAGE_INTERVAL_MINUTES のメッセージが送信対象
           if((nowMinutesAgo.getTime() <= d.getTime())
-            && (now.getTime() > d.getTime())){
+            && (now.getTime() >= d.getTime())){
+            console.log(msg);
             //実行する時間のメッセージがあればそれをbroadcast_messageとして書き込む
-            _this.postBroadcastMessages("System",msg.value);
+            _self.postBroadcastMessages("System",msg.value);
           }
         }
       }
@@ -61,7 +88,7 @@ function App() {
     //name,value
 
     var options = {
-      uri: this.API_SERVER+this.API_BROADCAST_MESSAGES,
+      uri: self.API_SERVER+self.API_BROADCAST_MESSAGES,
       headers: {
         "Content-type": "application/x-www-form-urlencoded",
       },
