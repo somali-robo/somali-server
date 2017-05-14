@@ -48,20 +48,6 @@ Template.broadcastMessageTemplate.events({
               }
             }
         });
-        /*
-        //確認ダイアログを表示
-        const msg ="入力されたメッセージを一斉送信します。よろしいですか？";
-        const confirm = bootbox.confirm(msg, function(result) {
-            //送信処理
-            const value = $("#txtMessage").val();
-            console.log(msg);
-            const obj = BroadcastMessage.create("System",value);
-            const res = BroadcastMessages.insert(obj);
-
-            //送信がおわったらクリア
-            $("#txtMessage").val("");
-        });
-        */
     },
     // Clear ボタンのクリックイベント
     'click .btnClear': function(event, template) {
@@ -81,11 +67,15 @@ Template.broadcastMessageTemplate.events({
     'click .btnEdit': function(event, template) {
         console.log('btnEdit');
         const currentTarget = $(event.currentTarget);
+        console.log(currentTarget);
 
-        const id = currentTarget.data('id');
-        const time = currentTarget.data('time');
-        const value = currentTarget.data('value');
-        const createdAt = currentTarget.data('createdat');
+        const id = currentTarget.attr('data-id');
+        const time = currentTarget.attr('data-time');
+        const value = currentTarget.attr('data-value');
+        const createdAt = currentTarget.attr('data-createdat');
+        console.log('id '+id);
+        console.log('time '+time);
+        console.log('value '+value);
 
         const HHmm = time.split(":");
         const sendFormHtml = "<label for='txtMM'>Time(HH:mm)</label><br />"
@@ -161,6 +151,7 @@ Template.broadcastMessageTemplate.events({
 
         $("#txtHH").val(HHmm[0]);
         $("#txtMM").val(HHmm[1]);
+        $("#txtValue").val(value);
     }
 
 });
