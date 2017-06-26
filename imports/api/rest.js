@@ -341,8 +341,13 @@ Api.addRoute('broadcast_messages', {
     action: function() {
       //const data = BroadcastMessages.find({},{sort: {createdAt:1}}).fetch();
       //console.log("BroadcastMessage.ROW_LIMIT "+BroadcastMessage.prototype.ROW_LIMIT);
-      const data = BroadcastMessages.find({},{sort: {createdAt:1},limit:BroadcastMessage.prototype.ROW_LIMIT}).fetch();
+      const data = BroadcastMessages.find({},{sort: {createdAt:-1},limit:BroadcastMessage.prototype.ROW_LIMIT}).fetch();
       console.log(data);
+      data.sort(function(a,b){
+        if(a.createdAt>b.createdAt) return -1;
+        if(a.createdAt < b.createdAt) return 1;
+        return 0;
+      });
       return {
         status: 'success',
         data: data
