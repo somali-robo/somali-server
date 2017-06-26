@@ -48,6 +48,7 @@ Empath.analyzeWav = function(apiKey,wavPath,callback){
         //console.log("result: " + JSON.stringify(result));
         callback(result,null);
       }catch(e){
+        console.log(e);
         callback(null,"response error");
         return false;
       }
