@@ -340,7 +340,8 @@ Api.addRoute('broadcast_messages', {
   get: {
     action: function() {
       //const data = BroadcastMessages.find({},{sort: {createdAt:1}}).fetch();
-      const data = BroadcastMessages.find({},{sort: {createdAt:1},limit:BroadcastMessage.ROW_LIMIT}).fetch();
+      //console.log("BroadcastMessage.ROW_LIMIT "+BroadcastMessage.prototype.ROW_LIMIT);
+      const data = BroadcastMessages.find({},{sort: {createdAt:1},limit:BroadcastMessage.prototype.ROW_LIMIT}).fetch();
       console.log(data);
       return {
         status: 'success',
