@@ -16,7 +16,6 @@ import {Dropbox} from '../extra/dropbox';
 import {Config} from '../config';
 
 const MESSAGES_MAX_LEGTH = 20;
-const DATA_ROW_LIMIT = 30;
 
 if (Meteor.isServer) {
   //Dropbox初期化
@@ -341,7 +340,7 @@ Api.addRoute('broadcast_messages', {
   get: {
     action: function() {
       //const data = BroadcastMessages.find({},{sort: {createdAt:1}}).fetch();
-      const data = BroadcastMessages.find({},{sort: {createdAt:1},limit:DATA_ROW_LIMIT}).fetch();
+      const data = BroadcastMessages.find({},{sort: {createdAt:1},limit:BroadcastMessage.ROW_LIMIT}).fetch();
       console.log(data);
       return {
         status: 'success',

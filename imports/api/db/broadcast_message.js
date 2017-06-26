@@ -9,6 +9,8 @@ BroadcastMessage.prototype.name = "";
 BroadcastMessage.prototype.value = "";
 BroadcastMessage.prototype.createdAt = "";
 
+BroadcastMessage.prototype.ROW_LIMIT = 10;
+
 BroadcastMessage.create = function(name,value){
   var result = new BroadcastMessage();
   result.name  = name;
