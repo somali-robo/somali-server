@@ -6,7 +6,7 @@ var Empath = function(){};
 Empath.request = require('request');
 Empath.fs = require('fs');
 Empath.process = require('process');
-Empath.API_BASE_URL = "http://api.webempath.net:8080/v1";
+Empath.API_BASE_URL = "http://api.webempath.net:8080/v2";
 Empath.API_ANALYZE_WAV = "/analyzeWav";
 Empath.TYPE ={
   ERROR:{'key':'error','label':'エラーコード'},
