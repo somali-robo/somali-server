@@ -6,8 +6,10 @@ var Empath = function(){};
 Empath.request = require('request');
 Empath.fs = require('fs');
 Empath.process = require('process');
-Empath.API_BASE_URL = "https://api.webempath.net/v1";
+Empath.API_BASE_URL = "https://api.webempath.net/v2";
 Empath.API_ANALYZE_WAV = "/analyzeWav";
+//https://api.webempath.net/v2/analyzeWav
+
 Empath.TYPE ={
   ERROR:{'key':'error','label':'エラーコード'},
   CALM:{'key':'calm','label':'平常'},
@@ -20,6 +22,7 @@ Empath.TYPE ={
 /** WAVを送信して感情解析
 */
 Empath.analyzeWav = function(apiKey,wavPath,callback){
+  console.log("analyzeWav "+apiKey);
   //POST multipart/form-data
   var wavFile = this.fs.createReadStream( wavPath );
   var url = this.API_BASE_URL+this.API_ANALYZE_WAV;
